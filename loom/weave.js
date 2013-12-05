@@ -2,7 +2,7 @@
  * TroopJS browser/loom/weave
  * @license MIT http://troopjs.mit-license.org/ © Mikael Karon mailto:mikael@karon.se
  */
-define([ "./config", "require", "when", "jquery", "troopjs-utils/getargs", "poly/array" ], function WeaveModule(config, parentRequire, when, $, getargs) {
+define([ "./config", "require", "when", "jquery", "troopjs-utils/getargs", "troopjs-core/pubsub/hub", "poly/array" ], function WeaveModule(config, parentRequire, when, $, getargs, hub) {
 	"use strict";
 
 	var UNDEFINED;
@@ -25,6 +25,9 @@ define([ "./config", "require", "when", "jquery", "troopjs-utils/getargs", "poly
 	return function weave() {
 		// Store start_args for later
 		var start_args = arguments;
+
+		// Publish for that we're weaving in, it allows widgets from another troop version on the page get woven as well.
+		hub.publish("weave", this);
 
 		// Map elements
 		return when.all(ARRAY_MAP.call(this, function (element) {

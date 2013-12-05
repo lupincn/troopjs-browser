@@ -29,6 +29,9 @@ define([ "./config", "when", "jquery", "poly/array" ], function UnweaveModule(co
 		// Store stop_args for later
 		var stop_args = arguments;
 
+		// Publish for that we're weaving in, it allows widgets from another troop version on the page get woven as well.
+		hub.publish("unweave", this);
+
 		// Map elements
 		return when.all(ARRAY_MAP.call(this, function (element) {
 			var $element = $(element);
